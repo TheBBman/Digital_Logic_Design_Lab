@@ -6,12 +6,13 @@ module clock_divider(
     output reg clk_1Hz,   // 1Hz clock output
     output reg clk_2Hz,   // 2Hz clock output
     output reg clk_500Hz  // 500Hz clock output
-    output reg clk_5Hz    // 5hz
+    output reg clk_5Hz    // 5Hz flashing clock
 );
 
 reg [26:0] counter_1Hz = 0;
 reg [26:0] counter_2Hz = 0;
 reg [16:0] counter_500Hz = 0;
+
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
