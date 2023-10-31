@@ -3,10 +3,10 @@ module clock_divder_test;
 	reg clk;
 	reg rst;
 
-  	reg clk_1Hz;
-  	reg clk_2Hz;
-  	reg clk_500Hz;	
-  	reg clk_5Hz;
+  	wire clk_1Hz;
+  	wire clk_2Hz;
+  	wire clk_500Hz;	
+  	wire clk_5Hz;
   
 	clock_divider uut (
 		.clk(clk),
