@@ -5,7 +5,7 @@ module clock_divider(
     input rst,            // Reset signal
     output reg clk_1Hz,   // 1Hz clock output
     output reg clk_2Hz,   // 2Hz clock output
-    output reg clk_500Hz  // 500Hz clock output
+    output reg clk_500Hz,  // 500Hz clock output
     output reg clk_5Hz    // 5Hz flashing clock
 );
 
