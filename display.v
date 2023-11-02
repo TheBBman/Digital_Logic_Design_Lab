@@ -21,16 +21,16 @@ module display(
     function [6:0] decode_seg;
         input [3:0] digit;
         case (digit)
-            4'h0: decode_seg = 7'b0000001; // 0
-            4'h1: decode_seg = 7'b1001111; // 1
-            4'h2: decode_seg = 7'b0010010; // 2
-            4'h3: decode_seg = 7'b0000110; // 3
-            4'h4: decode_seg = 7'b1001100; // 4
-            4'h5: decode_seg = 7'b0100100; // 5
-            4'h6: decode_seg = 7'b0100000; // 6
-            4'h7: decode_seg = 7'b0001111; // 7
+            4'h0: decode_seg = 7'b1000000; // 0
+            4'h1: decode_seg = 7'b1111001; // 1
+            4'h2: decode_seg = 7'b0100100; // 2
+            4'h3: decode_seg = 7'b0110000; // 3
+            4'h4: decode_seg = 7'b0011001; // 4
+            4'h5: decode_seg = 7'b0010010; // 5
+            4'h6: decode_seg = 7'b0000010; // 6
+            4'h7: decode_seg = 7'b1111000; // 7
             4'h8: decode_seg = 7'b0000000; // 8
-            4'h9: decode_seg = 7'b0000100; // 9
+            4'h9: decode_seg = 7'b0011000; // 9
             default: decode_seg = 7'b1111111; // Off
         endcase
     endfunction
