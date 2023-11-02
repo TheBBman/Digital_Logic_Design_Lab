@@ -14,13 +14,6 @@ reg [26:0] counter_2Hz = 0;
 reg [26:0] counter_5Hz = 0;
 reg [16:0] counter_500Hz = 0;
 
-//initial begin
-//    clk_1Hz <= 0;
-//    clk_2Hz <= 0;
-//    clk_5Hz <= 0;
-//    clk_500Hz <= 0;
-//end
-
 always @(posedge clk or posedge rst) begin
     if (rst) begin
         counter_1Hz <= 0;

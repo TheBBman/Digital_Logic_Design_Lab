@@ -1,11 +1,9 @@
-timescale 1ns / 1ps
-
 module top_level(
     input clk,            // Main clock signal
     input rst,            // Reset signal
     input [7:0] minutes,  // Minutes input
     input [7:0] seconds,  // Seconds input
-    output [7:0] seg,     // 7-segment display segments
+    output [6:0] seg,     // 7-segment display segments
     output [3:0] an       // 7-segment display anode signals
 );
 

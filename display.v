@@ -2,10 +2,9 @@ module display(
     input [7:0] minutes,  // 8 bits for minutes (00-59)
     input [7:0] seconds,  // 8 bits for seconds (00-59)
     input clk_500Hz,      // Clock signal for multiplexing
-    output reg [7:0] seg, // Segments including DP (active low)
+    output reg [6:0] seg, // Segments including DP (active low)
     output reg [3:0] an   // Anodes (active low)
 );
-
     // Internal signals for each digit
     wire [3:0] min_tens, min_ones, sec_tens, sec_ones;
     
@@ -19,20 +18,20 @@ module display(
     reg [1:0] digit_counter = 2'b00;
 
     // Segment decoding (active low for common anode)
-    function [7:0] decode_seg;
+    function [6:0] decode_seg;
         input [3:0] digit;
         case (digit)
-            4'h0: decode_seg = 8'b11000000;
-            4'h1: decode_seg = 8'b11111001;
-            4'h2: decode_seg = 8'b10100100;
-            4'h3: decode_seg = 8'b10110000;
-            4'h4: decode_seg = 8'b10011001;
-            4'h5: decode_seg = 8'b10010010;
-            4'h6: decode_seg = 8'b10000010;
-            4'h7: decode_seg = 8'b11111000;
-            4'h8: decode_seg = 8'b10000000;
-            4'h9: decode_seg = 8'b10010000;
-            default: decode_seg = 8'b11111111; // Off
+            4'h0: decode_seg = 7'b0000001; // 0
+            4'h1: decode_seg = 7'b1001111; // 1
+            4'h2: decode_seg = 7'b0010010; // 2
+            4'h3: decode_seg = 7'b0000110; // 3
+            4'h4: decode_seg = 7'b1001100; // 4
+            4'h5: decode_seg = 7'b0100100; // 5
+            4'h6: decode_seg = 7'b0100000; // 6
+            4'h7: decode_seg = 7'b0001111; // 7
+            4'h8: decode_seg = 7'b0000000; // 8
+            4'h9: decode_seg = 7'b0000100; // 9
+            default: decode_seg = 7'b1111111; // Off
         endcase
     endfunction
 
