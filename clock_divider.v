@@ -5,8 +5,8 @@ module clock_divider(
     input rst,            // Reset signal
     output reg clk_1Hz,   // 1Hz clock output
     output reg clk_2Hz,   // 2Hz clock output
-    output reg clk_5Hz    // 5Hz flashing clock
-    output reg clk_500Hz,  // 500Hz clock output
+    output reg clk_5Hz,    // 5Hz flashing clock
+    output reg clk_500Hz  // 500Hz clock output
 );
 
 reg [26:0] counter_1Hz = 0;
@@ -14,12 +14,12 @@ reg [26:0] counter_2Hz = 0;
 reg [26:0] counter_5Hz = 0;
 reg [16:0] counter_500Hz = 0;
 
-initial begin
-    clk_1Hz <= 0;
-    clk_2Hz <= 0;
-    clk_5Hz <= 0;
-    clk_500Hz <= 0;
-end;
+//initial begin
+//    clk_1Hz <= 0;
+//    clk_2Hz <= 0;
+//    clk_5Hz <= 0;
+//    clk_500Hz <= 0;
+//end
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
