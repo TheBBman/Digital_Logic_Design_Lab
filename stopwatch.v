@@ -8,8 +8,8 @@ module stopwatch (
     input wire clk_1Hz,   // 1Hz clock
     input wire clk_2Hz,   // 2Hz clock
 
-    output [5:0] seconds,     // 0 to 59
-    output [5:0] minutes,     // 0 to 59
+    output [7:0] seconds,     // 0 to 59
+    output [7:0] minutes,     // 0 to 59
 );
 
 reg [5:0] seconds_counter = 0;
