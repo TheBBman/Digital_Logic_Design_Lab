@@ -1,43 +1,73 @@
 module stopwatch (
-    input wire rst,       // Asynchronous reset
-    input wire pause,     // Pause counter
+    input clk,
+    input rst,           // Asynchronous reset
+    input pause,        // Pause counter
+    input select,       // 0: minutes, 1: seconds
+    input adjust,       // 0: stopwatch behaves normally, 1: sel increases at 2Hz
 
-    input wire sel,       // 0: minutes, 1: seconds
-    input wire adj,       // 0: stopwatch behaves normally, 1: sel increases at 2Hz
+    input clk_1Hz,              // 1Hz clock
+    input clk_2Hz,           // 2Hz clock
+    input clk_10Hz,
 
-    input wire clk_1Hz,   // 1Hz clock
-    input wire clk_2Hz,   // 2Hz clock
-
-    output [7:0] seconds,     // 0 to 59
-    output [7:0] minutes,     // 0 to 59
+    output reg [5:0] seconds,     // 0 to 59
+    output reg [5:0] minutes     // 0 to 59
 );
 
-reg [5:0] seconds_counter = 0;
-reg [5:0] minutes_counter = 0;
+reg pause_signal;
+reg paused;
 
-always @(posedge clk or posedge rst) begin
+always @(posedge clk_10Hz or posedge rst) begin 
     if (rst) begin
-        seconds_counter <= 0;
-        minutes_counter <= 0;
+        pause_signal = 0;
+        paused = 0;
+    end
+    else begin
+        if (~paused && pause) begin
+            pause_signal = ~pause_signal;
+            paused = 1;
+        end else begin
+            if (paused && ~pause) 
+                paused = 0;
+        end
+    end
+end
 
+always @(posedge clk_1Hz or posedge rst) begin
+    if (rst) begin 
+        seconds <= 0;
+        minutes <= 0;
     end else begin
-        // Stopwatch logic
-        if (clk_1Hz) begin
-            if (seconds_counter < 59) begin
-                seconds_counter <= seconds_counter + 1;
-            end else begin
-                seconds_counter <= 0; // Seconds rollover
-                if (minutes_counter < 59) begin
-                    minutes_counter <= minutes_counter + 1;
-                end else begin
-                    minutes_counter <= 0; // Minutes rollover
-                end
+        if (~adjust && ~pause_signal) begin
+            if (seconds < 59)
+                seconds <= seconds + 1;
+            else begin
+                seconds <= 0;
+                if (minutes < 59)
+                    minutes <= minutes + 1;
+                else
+                    minutes <= 0;
             end
         end
     end
 end
 
-assign seconds = seconds_counter;
-assign minutes = minutes_counter;
+always @(posedge clk_2Hz or posedge rst) begin
+    if (rst) begin 
+    end else begin
+        if (adjust) begin
+            if (select) begin
+                if (minutes < 59)
+                    minutes <= minutes + 1;
+                else
+                    minutes <= 0;
+            end else begin  
+                if (seconds < 59)
+                    seconds <= seconds + 1;
+                else
+                    seconds <= 0;
+            end
+        end
+    end
+end
 
 endmodule

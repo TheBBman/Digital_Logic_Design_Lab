@@ -1,7 +1,8 @@
 module display(
-    input [7:0] minutes,  // 8 bits for minutes (00-59)
-    input [7:0] seconds,  // 8 bits for seconds (00-59)
+    input [5:0] minutes,  // 8 bits for minutes (00-59)
+    input [5:0] seconds,  // 8 bits for seconds (00-59)
     input clk_500Hz,      // Clock signal for multiplexing
+    input rst,
     output reg [6:0] seg, // Segments including DP (active low)
     output reg [3:0] an   // Anodes (active low)
 );
@@ -20,6 +21,7 @@ module display(
     // Segment decoding (active low for common anode)
     function [6:0] decode_seg;
         input [3:0] digit;
+        
         case (digit)
             4'h0: decode_seg = 7'b1000000; // 0
             4'h1: decode_seg = 7'b1111001; // 1
@@ -38,7 +40,7 @@ module display(
     // On every clock cycle, update the digit to display
     always @(posedge clk_500Hz) begin
         digit_counter <= digit_counter + 1;
-        
+              
         case(digit_counter)
             2'b00: begin
                 seg <= decode_seg(min_tens); // Tens of minutes
@@ -57,6 +59,10 @@ module display(
                 an <= 4'b0111; // Activate fourth digit
             end
         endcase
+        
+        if (rst) begin
+            seg <= 7'b1111111;
+        end
     end
 
 endmodule
