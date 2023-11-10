@@ -8,7 +8,6 @@ module top_level(
     output [3:0] an       // 7-segment display anode signals
 );
 
-    wire clk_1Hz;
   	wire clk_2Hz;
   	wire clk_500Hz;	
   	wire clk_5Hz;
@@ -21,7 +20,6 @@ module top_level(
     clock_divider clk_div(
         .clk(clk),
       	.rst(rst),
-      	.clk_1Hz(clk_1Hz),
       	.clk_2Hz(clk_2Hz),
         .clk_5Hz(clk_5Hz),
         .clk_10Hz(clk_10Hz),
@@ -33,18 +31,19 @@ module top_level(
         .minutes(minutes),
         .seconds(seconds),
         .clk_500Hz(clk_500Hz),
+        .clk_5Hz(clk_5Hz),
         .rst(rst),
+        .select(select),
+        .adjust(adjust),
         .seg(seg),
         .an(an)
     );
     
     stopwatch stop(
-        .clk(clk),
         .rst(rst),
         .pause(pause),
         .select(select),
         .adjust(adjust),
-        .clk_1Hz(clk_1Hz),
         .clk_2Hz(clk_2Hz),
         .clk_10Hz(clk_10Hz),
         .seconds(seconds),
