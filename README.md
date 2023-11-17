@@ -1,2 +1,2 @@
-# FPGA_Stopwatch_Timer
+# Digital Logic Design Laboratory 
  
