@@ -21,15 +21,15 @@ module display(
     reg [1:0] digit_counter = 2'b00;
 
     // Letters
-    reg [6:0] E = 7'b1111001; // E
-    reg [6:0] A = 7'b1110111; // A
-    reg [6:0] S = 7'b1101101; // S
-    reg [6:0] Y = 7'b1100110; // Y
-    reg [6:0] r = 7'b1010000; // r
-    reg [6:0] g = 7'b1101111; // g
-    reg [6:0] U = 7'b0111110; // U
-    reg [6:0] H = 7'b0111110; // H
-    reg [6:0] d = 7'b1011110; // d
+    reg [6:0] E = 7'b0000110; // E
+    reg [6:0] A = 7'b0001000; // A
+    reg [6:0] S = 7'b0010010; // S
+    reg [6:0] Y = 7'b0011001; // Y
+    reg [6:0] r = 7'b0101111; // r
+    reg [6:0] g = 7'b0010000; // g
+    reg [6:0] U = 7'b1000001; // U
+    reg [6:0] H = 7'b0001001; // H
+    reg [6:0] d = 7'b0100001; // d
 
     // Segment decoding (active low for common anode)
     function [6:0] decode_seg;
