@@ -1,6 +1,7 @@
 module top_level(
     input clk,            // Main clock signal
     input rst,            // Reset signal
+    input select,
     // Define button inputs here
     output [6:0] seg,     // 7-segment display segments
     output [3:0] an       // 7-segment display anode signals
@@ -29,6 +30,7 @@ module top_level(
         .clk_500Hz(clk_500Hz),
         .clk_5Hz(clk_5Hz),
         .rst(rst),
+        .select(select),
         .seg(seg),
         .an(an)
     );

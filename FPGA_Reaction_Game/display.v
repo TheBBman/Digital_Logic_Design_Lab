@@ -3,6 +3,7 @@ module display(
     input clk_500Hz,      // Clock signal for multiplexing
     input clk_5Hz,
     input rst,
+    input select,
     output reg [6:0] seg, // Segments including DP (active low)
     output reg [3:0] an   // Anodes (active low)
 );
@@ -17,6 +18,17 @@ module display(
 
     // 2-bit counter to cycle through the digits
     reg [1:0] digit_counter = 2'b00;
+
+    // Letters
+    letter_E = 7'b1111001; // E
+    letter_A = 7'b1110111; // A
+    letter_S = 7'b1101101; // S
+    letter_Y = 7'b1100110; // Y
+    letter_r = 7'b1010000; // r
+    letter_g = 7'b1101111; // g
+    letter_U = 7'b0111110; // U
+    letter_H = 7'b0111110; // H
+    letter_d = 7'b1011110; // d
 
     // Segment decoding (active low for common anode)
     function [6:0] decode_seg;
