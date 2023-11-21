@@ -1,5 +1,5 @@
 module display(
-    input [13:0] number,  // 14 bits for up to 9999
+    input [12:0] number,  // 14 bits for up to 9999
     input clk_500Hz,      // Clock signal for multiplexing
     input clk_5Hz,
     input rst,
@@ -63,19 +63,19 @@ module display(
                 if (mode == 0) begin        // Easy
                     case(digit_counter)
                         2'b00: begin
-                            seg <= E
+                            seg <= E;
                             an <= 4'b1110;
                         end
                         2'b01: begin
-                            seg <= A
+                            seg <= A;
                             an <= 4'b1101;
                         end
                         2'b10: begin
-                            seg <= S
+                            seg <= S;
                             an <= 4'b1011;
                         end
                         2'b11: begin
-                            seg <= Y
+                            seg <= Y;
                             an <= 4'b0111;
                         end
                     endcase
@@ -83,19 +83,19 @@ module display(
                 else if (mode == 1) begin   // Medium
                     case(digit_counter)
                         2'b00: begin
-                            seg <= r
+                            seg <= r;
                             an <= 4'b1110;
                         end
                         2'b01: begin
-                            seg <= E
+                            seg <= E;
                             an <= 4'b1101;
                         end
                         2'b10: begin
-                            seg <= g
+                            seg <= g;
                             an <= 4'b1011;
                         end
                         2'b11: begin
-                            seg <= U
+                            seg <= U;
                             an <= 4'b0111;
                         end
                     endcase
@@ -103,19 +103,19 @@ module display(
                 else begin                  // Hard
                     case(digit_counter)
                         2'b00: begin
-                            seg <= H
+                            seg <= H;
                             an <= 4'b1110;
                         end
                         2'b01: begin
-                            seg <= A
+                            seg <= A;
                             an <= 4'b1101;
                         end
                         2'b10: begin
-                            seg <= r
+                            seg <= r;
                             an <= 4'b1011;
                         end
                         2'b11: begin
-                            seg <= d
+                            seg <= d;
                             an <= 4'b0111;
                         end
                     endcase
