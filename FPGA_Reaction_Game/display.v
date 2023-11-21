@@ -4,7 +4,7 @@ module display(
     input clk_5Hz,
     input rst,
     input select,         // Game state
-    input mode,           // Select mode (easy, regular, hard)
+    input [1:0] mode,           // Select mode (easy, regular, hard)
     output reg [6:0] seg, // Segments including DP (active low)
     output reg [3:0] an   // Anodes (active low)
 );
