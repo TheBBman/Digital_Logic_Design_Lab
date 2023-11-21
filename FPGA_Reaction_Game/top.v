@@ -1,9 +1,9 @@
 module top_level(
     input clk,            // Main clock signal
     input rst,            // Reset signal
-    input number,
+    input [12:0] number,
     input select,
-    input mode,
+    input [1:0] mode,
     // Define button inputs here
     output [6:0] seg,     // 7-segment display segments
     output [3:0] an       // 7-segment display anode signals
