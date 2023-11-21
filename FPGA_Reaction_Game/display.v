@@ -60,7 +60,7 @@ module display(
             digit_counter <= digit_counter + 1;
 
             if (select == 0) begin
-                if (mode == 0) begin        // Easy
+                if (mode == 2'b00) begin        // Easy
                     case(digit_counter)
                         2'b00: begin
                             seg <= E;
@@ -80,7 +80,7 @@ module display(
                         end
                     endcase
                 end 
-                else if (mode == 1) begin   // Medium
+                else if (mode == 2'b01) begin   // Medium
                     case(digit_counter)
                         2'b00: begin
                             seg <= r;
@@ -100,7 +100,7 @@ module display(
                         end
                     endcase
                 end
-                else begin                  // Hard
+                else if (mode == 2'b10) begin                  // Hard
                     case(digit_counter)
                         2'b00: begin
                             seg <= H;
