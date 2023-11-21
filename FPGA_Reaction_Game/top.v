@@ -1,7 +1,9 @@
 module top_level(
     input clk,            // Main clock signal
     input rst,            // Reset signal
+    input number,
     input select,
+    input mode,
     // Define button inputs here
     output [6:0] seg,     // 7-segment display segments
     output [3:0] an       // 7-segment display anode signals
@@ -12,7 +14,7 @@ module top_level(
   	wire clk_5Hz;
   	wire clk_10Hz;
   	
-  	wire [13:0] number;
+  	// wire [13:0] number;
 
     // Instantiate the clock divider
     clock_divider clk_div(
@@ -31,6 +33,7 @@ module top_level(
         .clk_5Hz(clk_5Hz),
         .rst(rst),
         .select(select),
+        .mode(mode),
         .seg(seg),
         .an(an)
     );

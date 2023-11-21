@@ -3,12 +3,13 @@ module display(
     input clk_500Hz,      // Clock signal for multiplexing
     input clk_5Hz,
     input rst,
-    input select,
+    input select,         // Game state
+    input mode,           // Select mode (easy, regular, hard)
     output reg [6:0] seg, // Segments including DP (active low)
     output reg [3:0] an   // Anodes (active low)
 );
     // Internal signals for each digit
-    wire [3:0] min_tens, min_ones, sec_tens, sec_ones;
+    wire [3:0] dig_3, dig_2, dig_1, dig_0;
     
     // Assign each pair of digits
     assign dig_3 = number / 1000;        // Leftmost digit
@@ -20,15 +21,15 @@ module display(
     reg [1:0] digit_counter = 2'b00;
 
     // Letters
-    letter_E = 7'b1111001; // E
-    letter_A = 7'b1110111; // A
-    letter_S = 7'b1101101; // S
-    letter_Y = 7'b1100110; // Y
-    letter_r = 7'b1010000; // r
-    letter_g = 7'b1101111; // g
-    letter_U = 7'b0111110; // U
-    letter_H = 7'b0111110; // H
-    letter_d = 7'b1011110; // d
+    reg [6:0] E = 7'b1111001; // E
+    reg [6:0] A = 7'b1110111; // A
+    reg [6:0] S = 7'b1101101; // S
+    reg [6:0] Y = 7'b1100110; // Y
+    reg [6:0] r = 7'b1010000; // r
+    reg [6:0] g = 7'b1101111; // g
+    reg [6:0] U = 7'b0111110; // U
+    reg [6:0] H = 7'b0111110; // H
+    reg [6:0] d = 7'b1011110; // d
 
     // Segment decoding (active low for common anode)
     function [6:0] decode_seg;
@@ -54,28 +55,93 @@ module display(
         if (rst) begin
             an <= 4'b0000;
             seg <= 7'b1111111;
-        end else begin
+        end 
+        else begin
             digit_counter <= digit_counter + 1;
-                  
-            case(digit_counter)
-                2'b00: begin
-                    seg <= decode_seg(dig_3); 
-                    an <= 4'b1110;
+
+            if (select == 0) begin
+                if (mode == 0) begin        // Easy
+                    case(digit_counter)
+                        2'b00: begin
+                            seg <= E
+                            an <= 4'b1110;
+                        end
+                        2'b01: begin
+                            seg <= A
+                            an <= 4'b1101;
+                        end
+                        2'b10: begin
+                            seg <= S
+                            an <= 4'b1011;
+                        end
+                        2'b11: begin
+                            seg <= Y
+                            an <= 4'b0111;
+                        end
+                    endcase
+                end 
+                else if (mode == 1) begin   // Medium
+                    case(digit_counter)
+                        2'b00: begin
+                            seg <= r
+                            an <= 4'b1110;
+                        end
+                        2'b01: begin
+                            seg <= E
+                            an <= 4'b1101;
+                        end
+                        2'b10: begin
+                            seg <= g
+                            an <= 4'b1011;
+                        end
+                        2'b11: begin
+                            seg <= U
+                            an <= 4'b0111;
+                        end
+                    endcase
                 end
-                2'b01: begin
-                    seg <= decode_seg(dig_2);
-                    an <= 4'b1101;
+                else begin                  // Hard
+                    case(digit_counter)
+                        2'b00: begin
+                            seg <= H
+                            an <= 4'b1110;
+                        end
+                        2'b01: begin
+                            seg <= A
+                            an <= 4'b1101;
+                        end
+                        2'b10: begin
+                            seg <= r
+                            an <= 4'b1011;
+                        end
+                        2'b11: begin
+                            seg <= d
+                            an <= 4'b0111;
+                        end
+                    endcase
                 end
-                2'b10: begin
-                    seg <= decode_seg(dig_1);
-                    an <= 4'b1011;
-                end
-                2'b11: begin
-                    seg <= decode_seg(dig_0);
-                    an <= 4'b0111;
-                end
-            endcase
-        end
+            end
+            else if (select == 1) begin
+                case(digit_counter)
+                    2'b00: begin
+                        seg <= decode_seg(dig_3); 
+                        an <= 4'b1110;
+                    end
+                    2'b01: begin
+                        seg <= decode_seg(dig_2);
+                        an <= 4'b1101;
+                    end
+                    2'b10: begin
+                        seg <= decode_seg(dig_1);
+                        an <= 4'b1011;
+                    end
+                    2'b11: begin
+                        seg <= decode_seg(dig_0);
+                        an <= 4'b0111;
+                    end
+                endcase
+            end
+        end 
     end
 
 endmodule
