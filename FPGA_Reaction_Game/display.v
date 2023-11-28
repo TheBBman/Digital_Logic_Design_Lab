@@ -1,5 +1,5 @@
 module display(
-    input [12:0] number,  // 14 bits for up to 9999
+    input [13:0] number,  // 14 bits for up to 9999
     input clk_500Hz,      // Clock signal for multiplexing
     input clk_5Hz,
     input rst,

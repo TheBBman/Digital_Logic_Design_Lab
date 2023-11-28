@@ -1,8 +1,6 @@
 module top_level(
     input clk,            // Main clock signal
     input rst,            // Reset signal
-    input [12:0] number,
-    input select,
     input btnU,
     input btnS,
     input btnD,
@@ -15,18 +13,21 @@ module top_level(
   	wire clk_500Hz;	
   	wire clk_5Hz;
   	wire clk_10Hz;
+    wire select;
+    wire [1:0] mode;
+    wire [13:0] number;
   	
   	// wire [13:0] number;
 
     logic log(
         .clk(clk),
-        .clk_10Hz(clk_10Hz),
         .rst(rst),
         .btnU(btnU),
         .btnS(btnS),
         .btnD(btnD),
         .select(select),
-        .mode(mode)
+        .mode(mode),
+        .number(number)
     );
 
     // Instantiate the clock divider
