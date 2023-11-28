@@ -4,7 +4,7 @@ module logic(
     input btnU,
     input btnD,
     input btnS,
-    output reg select,
+    output reg [1:0] select,
     output reg [1:0] mode,
     output reg [13:0] number
 );
@@ -17,7 +17,7 @@ parameter easy_ticks =  1000000;
 parameter reg_ticks =   200000;
 parameter hard_ticks =  100000;
 
-reg [10:0] tick_count;
+reg [19:0] tick_count;
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
@@ -66,7 +66,9 @@ always @(posedge clk or posedge rst) begin
                 number <= number + 1;
                 tick_count <= 0;
             end
-            
+            if (btnS && ~btnS_lock) begin
+                select <= 2;
+            end
         end
     end
 

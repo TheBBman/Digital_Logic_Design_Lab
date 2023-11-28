@@ -3,7 +3,7 @@ module display(
     input clk_500Hz,      // Clock signal for multiplexing
     input clk_5Hz,
     input rst,
-    input select,         // Game state
+    input [1:0] select,         // Game state
     input [1:0] mode,     // Select mode (easy, regular, hard)
     output reg [6:0] seg, // Segments including DP (active low)
     output reg [3:0] an   // Anodes (active low)
@@ -121,7 +121,7 @@ module display(
                     endcase
                 end
             end
-            else if (select == 1) begin
+            else if (select > 0) begin
                 case(digit_counter)
                     2'b00: begin
                         seg <= decode_seg(dig_3); 

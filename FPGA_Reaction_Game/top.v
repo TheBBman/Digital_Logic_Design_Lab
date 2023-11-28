@@ -13,7 +13,7 @@ module top_level(
   	wire clk_500Hz;	
   	wire clk_5Hz;
   	wire clk_10Hz;
-    wire select;
+    wire [1:0] select;
     wire [1:0] mode;
     wire [13:0] number;
   	
