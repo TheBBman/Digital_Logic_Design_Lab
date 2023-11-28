@@ -4,6 +4,9 @@ module top_level(
     input [12:0] number,
     input select,
     input [1:0] mode,
+    input btnU,
+    input btnS,
+    input btnD,
     // Define button inputs here
     output [6:0] seg,     // 7-segment display segments
     output [3:0] an       // 7-segment display anode signals
@@ -15,6 +18,17 @@ module top_level(
   	wire clk_10Hz;
   	
   	// wire [13:0] number;
+
+    logic log(
+        .clk(clk),
+        .clk_10Hz(clk_10Hz),
+        .rst(rst),
+        .btnU(btnU),
+        .btnS(btnS),
+        .btnD(btnD),
+        .select(select),
+        .mode(mode)
+    );
 
     // Instantiate the clock divider
     clock_divider clk_div(
