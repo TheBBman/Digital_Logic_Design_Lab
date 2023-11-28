@@ -3,7 +3,6 @@ module top_level(
     input rst,            // Reset signal
     input [12:0] number,
     input select,
-    input [1:0] mode,
     input btnU,
     input btnS,
     input btnD,
