@@ -6,7 +6,8 @@ module top_level(
     input btnD,
     // Define button inputs here
     output [6:0] seg,     // 7-segment display segments
-    output [3:0] an       // 7-segment display anode signals
+    output [3:0] an,       // 7-segment display anode signals
+    output [15:0] led
 );
 
   	wire clk_2Hz;
@@ -16,6 +17,7 @@ module top_level(
     wire [1:0] select;
     wire [1:0] mode;
     wire [13:0] number;
+    wire [13:0] rand;
   	
   	// wire [13:0] number;
 
@@ -26,8 +28,10 @@ module top_level(
         .btnS(btnS),
         .btnD(btnD),
         .select(select),
+        .rand(rand),
         .mode(mode),
-        .number(number)
+        .number(number),
+        .led(led)
     );
 
     // Instantiate the clock divider
@@ -50,6 +54,12 @@ module top_level(
         .mode(mode),
         .seg(seg),
         .an(an)
+    );
+
+    LFSR random(
+        .clk(clk),
+        .rst(rst),
+        .rand(rand)
     );
 
 endmodule

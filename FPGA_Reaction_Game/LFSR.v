@@ -5,17 +5,17 @@ module LFSR(
 );
 
 reg [31:0] LFSR;
-reg xNOR;
+wire xNOR;
 
 always @(posedge clk or posedge rst) begin
     if (rst) begin
-        LSFR <= 673641282;
+        LFSR <= 673641282;
     end else begin
-        LSFR <= {LSFR[30:0], xNOR};
+        LFSR <= {LFSR[30:0], xNOR};
     end
 end
 
 assign rand = LFSR[13:0];
-assign xNOR = LSFR[32]^~LSFR[22]^~LSFR[2]^~LSFR[1];
+assign xNOR = LFSR[32]^~LFSR[22]^~LFSR[2]^~LFSR[1];
 
 endmodule

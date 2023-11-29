@@ -4,14 +4,18 @@ module logic(
     input btnU,
     input btnD,
     input btnS,
+    input [13:0] rand,
     output reg [1:0] select,
     output reg [1:0] mode,
-    output reg [13:0] number
+    output reg [13:0] number,
+    output reg [15:0] led
 );
 
 reg btnU_lock;
 reg btnS_lock;
 reg btnD_lock;
+reg [13:0] current_rand;
+reg [12:0] score;
 
 parameter easy_ticks =  1000000;
 parameter reg_ticks =   200000;
@@ -27,11 +31,13 @@ always @(posedge clk or posedge rst) begin
         btnS_lock <= 0;
         btnD_lock <= 0;
         tick_count <= 0;
+        current_rand <= 0;
         number <= 0;
     end else begin
         if (select == 0) begin
             if (btnS) begin
-                select <= 1;
+                select <= 3;
+                btnS_lock <= 1;
             end
             if (~btnU_lock && btnU) begin
                 if (mode < 2) begin
@@ -52,7 +58,7 @@ always @(posedge clk or posedge rst) begin
                 btnD_lock <= 0;
             end
         end
-        else if (select == 1) begin
+        if (select == 1) begin
             tick_count <= tick_count + 1;
             if (mode == 0 && (tick_count == easy_ticks - 1)) begin
                 number <= number + 1;
@@ -66,8 +72,34 @@ always @(posedge clk or posedge rst) begin
                 number <= number + 1;
                 tick_count <= 0;
             end
+            if (btnS_lock && ~btnS) begin
+                btnS_lock <= 0;
+            end
             if (btnS && ~btnS_lock) begin
                 select <= 2;
+            end
+        end
+        if (select == 2) begin
+            if (number < current_rand)
+                score <= current_rand - number;
+            else 
+                score <= number - current_rand;
+            if (score < 500) begin
+                led = 64;
+            end
+        end
+        if (select == 3) begin
+            if (current_rand == 0) begin
+                current_rand <= rand;
+                number <= current_rand;
+            end
+            if (btnS_lock && ~btnS) begin
+                btnS_lock <= 0;
+            end
+            if (btnS && ~btnS_lock) begin
+                select <= 1;
+                number <= 0;
+                btnS_lock <= 1;
             end
         end
     end
