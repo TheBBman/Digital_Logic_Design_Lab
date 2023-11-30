@@ -26,7 +26,7 @@ parameter hard_ticks =  100000;
 
 reg [19:0] tick_count;
 
-always @(posedge clk_20Hz) begin
+always @(posedge clk_20Hz or posedge rst) begin
     // Select
     if (btnS && ~btnS_lock) begin
         btnS_lock <= 1;
@@ -84,6 +84,7 @@ always @(posedge clk or posedge rst) begin
             end
         end
         if (select == 2) begin
+            number <= 0;
             tick_count <= tick_count + 1;
             if (mode == 0 && (tick_count == easy_ticks - 1)) begin
                 number <= number + 1;
