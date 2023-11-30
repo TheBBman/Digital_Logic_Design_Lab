@@ -42,7 +42,7 @@ always @(posedge clk_20Hz or posedge rst) begin
                 select <= 1; // Random number mode
             else if (select == 1) begin
                 select <= 2; // Counting mode
-                number <= 0;
+                
             end
             else if (select == 2)
                 select <= 3; // Score calculation mode
@@ -80,6 +80,7 @@ always @(posedge clk or posedge rst) begin
         tick_count <= 0;
         current_rand <= 0;
         number <= 0;
+        
     end else begin
         if (select == 1) begin
             if (current_rand == 0) begin
