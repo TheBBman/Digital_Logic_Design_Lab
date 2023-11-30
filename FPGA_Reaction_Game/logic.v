@@ -29,7 +29,7 @@ always @(posedge clk or posedge rst) begin
         select <= 0;
         mode <= 1;
         led <= 0;
-        score <= 0;
+        score <= 500;
         btnU_lock <= 0;
         btnS_lock <= 0;
         btnD_lock <= 0;
@@ -83,7 +83,7 @@ always @(posedge clk or posedge rst) begin
             end
         end
         if (select == 2) begin
-            if (score == 0) begin
+            if (score == 500) begin
                 if (number < current_rand)
                     score <= current_rand - number;
                 else 
