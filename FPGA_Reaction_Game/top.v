@@ -48,7 +48,7 @@ module top_level(
     display disp(
         .number(number),
         .clk_500Hz(clk_500Hz),
-        .clk_5Hz(clk_5Hz),
+        .clk_2Hz(clk_2Hz),
         .rst(rst),
         .select(select),
         .mode(mode),

@@ -29,6 +29,7 @@ always @(posedge clk or posedge rst) begin
         select <= 0;
         mode <= 1;
         led <= 0;
+        score <= 0;
         btnU_lock <= 0;
         btnS_lock <= 0;
         btnD_lock <= 0;
@@ -82,15 +83,18 @@ always @(posedge clk or posedge rst) begin
             end
         end
         if (select == 2) begin
-            if (number < current_rand)
-                score <= current_rand - number;
-            else 
-                score <= number - current_rand;
+            if (score == 0) begin
+                if (number < current_rand)
+                    score <= current_rand - number;
+                else 
+                    score <= number - current_rand;
+            end
             num_leds_off =  16;
             if (score < 490) begin
                 num_leds_off = score/30;
                 led = ~((1'b1 << num_leds_off) - 1'b1);
             end
+            number = score;
         end
         if (select == 3) begin
             if (current_rand == 0) begin

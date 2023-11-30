@@ -1,7 +1,7 @@
 module display(
     input [13:0] number,  // 14 bits for up to 9999
     input clk_500Hz,      // Clock signal for multiplexing
-    input clk_5Hz,
+    input clk_2Hz,
     input rst,
     input [1:0] select,         // Game state
     input [1:0] mode,     // Select mode (easy, regular, hard)
@@ -140,6 +140,8 @@ module display(
                         an <= 4'b0111;
                     end
                 endcase
+                if (select == 2 && clk_2Hz) 
+                    seg <= 7'b1111111;
             end
         end 
     end
