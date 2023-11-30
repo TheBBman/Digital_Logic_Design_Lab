@@ -18,7 +18,7 @@ always @(posedge clk or posedge rst) begin
     if (rst) begin
         counter_2Hz <= 0;
         counter_5Hz <= 0;
-        counter_10Hz <= 0;
+        counter_20Hz <= 0;
         counter_500Hz <= 0;
         clk_2Hz <= 0;
         clk_5Hz <= 0;
