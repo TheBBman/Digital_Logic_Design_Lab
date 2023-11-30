@@ -16,6 +16,8 @@ reg btnU_lock;
 reg btnS_lock;
 reg btnD_lock;
 
+reg num_reset_flag;
+
 reg [13:0] current_rand;
 reg [12:0] score;
 reg [4:0] num_leds_off;
@@ -33,6 +35,7 @@ always @(posedge clk_20Hz or posedge rst) begin
         btnD_lock <= 0;
         select <= 0;
         mode <= 1;
+        num_reset_flag <= 0;
 
     end else begin
         // Select
@@ -41,8 +44,8 @@ always @(posedge clk_20Hz or posedge rst) begin
             if (select == 0)
                 select <= 1; // Random number mode
             else if (select == 1) begin
+                num_reset_flag <= 1;
                 select <= 2; // Counting mode
-                
             end
             else if (select == 2)
                 select <= 3; // Score calculation mode
@@ -80,7 +83,7 @@ always @(posedge clk or posedge rst) begin
         tick_count <= 0;
         current_rand <= 0;
         number <= 0;
-        
+
     end else begin
         if (select == 1) begin
             if (current_rand == 0) begin
@@ -89,7 +92,10 @@ always @(posedge clk or posedge rst) begin
             end
         end
         if (select == 2) begin
-            number <= 0;
+            if (num_reset_flag) begin
+                number <= 0;
+                num_reset_flag <= 0;
+            end
             tick_count <= tick_count + 1;
             if (mode == 0 && (tick_count == easy_ticks - 1)) begin
                 number <= number + 1;
