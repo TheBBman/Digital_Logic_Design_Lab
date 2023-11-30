@@ -13,7 +13,7 @@ module top_level(
   	wire clk_2Hz;
   	wire clk_500Hz;	
   	wire clk_5Hz;
-  	wire clk_10Hz;
+  	wire clk_20Hz;
     wire [1:0] select;
     wire [1:0] mode;
     wire [13:0] number;
@@ -29,6 +29,7 @@ module top_level(
         .btnD(btnD),
         .select(select),
         .rand(rand),
+        .clk_20Hz(clk_20Hz),
         .mode(mode),
         .number(number),
         .led(led)
@@ -40,7 +41,7 @@ module top_level(
       	.rst(rst),
       	.clk_2Hz(clk_2Hz),
         .clk_5Hz(clk_5Hz),
-        .clk_10Hz(clk_10Hz),
+        .clk_20Hz(clk_20Hz),
       	.clk_500Hz(clk_500Hz)
     );
 

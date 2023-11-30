@@ -11,7 +11,7 @@ module top_level(
   	wire clk_2Hz;
   	wire clk_500Hz;	
   	wire clk_5Hz;
-  	wire clk_10Hz;
+  	wire clk_20Hz;
   	
   	wire [5:0] minutes;
   	wire [5:0] seconds;
@@ -22,7 +22,7 @@ module top_level(
       	.rst(rst),
       	.clk_2Hz(clk_2Hz),
         .clk_5Hz(clk_5Hz),
-        .clk_10Hz(clk_10Hz),
+        .clk_20Hz(clk_20Hz),
       	.clk_500Hz(clk_500Hz)
     );
 
@@ -45,7 +45,7 @@ module top_level(
         .select(select),
         .adjust(adjust),
         .clk_2Hz(clk_2Hz),
-        .clk_10Hz(clk_10Hz),
+        .clk_20Hz(clk_20Hz),
         .seconds(seconds),
         .minutes(minutes)
     );
