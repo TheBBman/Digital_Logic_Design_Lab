@@ -35,7 +35,6 @@ always @(posedge clk_20Hz or posedge rst) begin
         btnD_lock <= 0;
         select <= 0;
         mode <= 1;
-        num_reset_flag <= 0;
 
     end else begin
         // Select
@@ -43,10 +42,8 @@ always @(posedge clk_20Hz or posedge rst) begin
             btnS_lock <= 1;
             if (select == 0)
                 select <= 1; // Random number mode
-            else if (select == 1) begin
-                num_reset_flag <= 1;
+            else if (select == 1)
                 select <= 2; // Counting mode
-            end
             else if (select == 2)
                 select <= 3; // Score calculation mode
         end
@@ -83,6 +80,7 @@ always @(posedge clk or posedge rst) begin
         tick_count <= 0;
         current_rand <= 0;
         number <= 0;
+        num_reset_flag <= 1;
 
     end else begin
         if (select == 1) begin
