@@ -16,6 +16,7 @@ reg btnS_lock;
 reg btnD_lock;
 reg [13:0] current_rand;
 reg [12:0] score;
+reg [4:0] num_leds_off;
 
 parameter easy_ticks =  1000000;
 parameter reg_ticks =   200000;
@@ -27,6 +28,7 @@ always @(posedge clk or posedge rst) begin
     if (rst) begin
         select <= 0;
         mode <= 1;
+        led <= 0;
         btnU_lock <= 0;
         btnS_lock <= 0;
         btnD_lock <= 0;
@@ -84,14 +86,16 @@ always @(posedge clk or posedge rst) begin
                 score <= current_rand - number;
             else 
                 score <= number - current_rand;
-            if (score < 500) begin
-                led = 64;
+            num_leds_off =  16;
+            if (score < 490) begin
+                num_leds_off = score/30;
+                led = ~((1'b1 << num_leds_off) - 1'b1);
             end
         end
         if (select == 3) begin
             if (current_rand == 0) begin
-                current_rand <= rand;
-                number <= current_rand;
+                current_rand = rand;
+                number = current_rand;
             end
             if (btnS_lock && ~btnS) begin
                 btnS_lock <= 0;
@@ -103,7 +107,6 @@ always @(posedge clk or posedge rst) begin
             end
         end
     end
-
 end
 
 endmodule
