@@ -140,7 +140,7 @@ module display(
                         an <= 4'b0111;
                     end
                 endcase
-                if (select == 2 && clk_2Hz) 
+                if (select == 3 && clk_2Hz) 
                     seg <= 7'b1111111;
             end
         end 

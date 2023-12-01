@@ -81,11 +81,16 @@ always @(posedge clk or posedge rst) begin
         current_rand <= 0;
         number <= 0;
         num_reset_flag <= 1;
+        score <= 500;
 
     end else begin
         if (select == 1) begin
             if (current_rand == 0) begin
                 current_rand = rand;
+                if (current_rand < 1000)
+                    current_rand = current_rand + 1000;
+                if (current_rand > 9999)
+                    current_rand = current_rand - 7000;
                 number = current_rand;
             end
         end
@@ -107,12 +112,16 @@ always @(posedge clk or posedge rst) begin
                 number <= number + 1;
                 tick_count <= 0;
             end
+            if (number == 10000) 
+                number <= 0;
         end
         if (select == 3) begin
-            if (number < current_rand)
-                score <= current_rand - number;
-            else 
-                score <= number - current_rand;
+            if (score == 500) begin
+                if (number < current_rand)
+                    score = current_rand - number;
+                else 
+                    score = number - current_rand;
+            end
             num_leds_off =  16;
             if (score < 490) begin
                 num_leds_off = score/30;
