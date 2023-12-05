@@ -6,10 +6,11 @@ module logic(
     input btnS,
     input [13:0] rand,
     input clk_20Hz,
+    input clk_5Hz,
     output reg [1:0] select,
     output reg [1:0] mode,
     output reg [13:0] number,
-    output reg [15:0] led
+    output reg [15:0] led_out
 );
 
 reg btnU_lock;
@@ -21,10 +22,12 @@ reg num_reset_flag;
 reg [13:0] current_rand;
 reg [12:0] score;
 reg [4:0] num_leds_off;
+reg [15:0] led;
+reg [3:0] led_counter;
 
-parameter easy_ticks =  1000000;
-parameter reg_ticks =   200000;
-parameter hard_ticks =  100000;
+parameter easy_ticks =  100000;
+parameter reg_ticks =   75000;
+parameter hard_ticks =  50000;
 
 reg [19:0] tick_count;
 
@@ -71,6 +74,18 @@ always @(posedge clk_20Hz or posedge rst) begin
         end
         if (~btnD && btnD_lock)
             btnD_lock <= 0;
+    end
+end
+
+always @(posedge clk_5Hz or posedge rst) begin
+    if (rst) begin
+        led_out = 0;
+        led_counter = 15;
+    end else begin
+        if (select == 3) begin
+            led_out[led_counter] = led[led_counter];
+            led_counter = led_counter - 1;
+        end
     end
 end
 

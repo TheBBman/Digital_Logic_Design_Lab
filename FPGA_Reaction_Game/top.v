@@ -30,9 +30,10 @@ module top_level(
         .select(select),
         .rand(rand),
         .clk_20Hz(clk_20Hz),
+        .clk_5Hz(clk_5Hz),
         .mode(mode),
         .number(number),
-        .led(led)
+        .led_out(led)
     );
 
     // Instantiate the clock divider
